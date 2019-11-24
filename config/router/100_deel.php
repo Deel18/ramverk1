@@ -1,0 +1,13 @@
+<?php
+/**
+ * Load the stylechooser as a controller class.
+ */
+return [
+    "routes" => [
+        [
+            "info" => "Deel Controller",
+            "mount" => "deel",
+            "handler" => "\Anax\Controller\DeelController",
+        ],
+    ]
+];
