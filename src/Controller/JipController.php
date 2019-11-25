@@ -54,22 +54,20 @@ class JipController implements ContainerInjectableInterface
      */
     public function verifyActionGet()
     {
-        $ip = $this->di->request->getGet("ip");
+        $ipv = $this->di->request->getGet("ip");
 
-        $valid = (filter_var($ip, FILTER_VALIDATE_IP)) ? "true" :  "false";
+        $valid = (filter_var($ipv, FILTER_VALIDATE_IP)) ? "true" :  "false";
 
-        $host = gethostbyaddr($ip);
+        $host = gethostbyaddr($ipv);
 
         $result = $valid ? "IP is valid." : "IP is not valid.";
 
-
         $data = [
-            "ip" => $ip,
+            "ip" => $ipv,
             "result" => $result,
             "host" => $host,
         ];
 
         return [$data];
     }
-
 }

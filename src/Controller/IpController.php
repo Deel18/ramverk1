@@ -1,6 +1,6 @@
 <?php
 
-namespace Deel\Controller;
+namespace Anax\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
@@ -25,21 +25,20 @@ class IpController implements ContainerInjectableInterface
 
     public function indexAction() : object
     {
-
         $title = "IP";
 
         $page = $this->di->get("page");
         $session = $this->di->session;
 
         $res = $session->get("res", null);
-        $ip = $session->get("ip", null);
+        $ipv = $session->get("ip", null);
 
         $session->set("res", null);
         $session->set("ip", null);
 
         $data = [
             "res" => $res,
-            "ip" => $ip,
+            "ip" => $ipv,
         ];
 
         $page->add("ip/verify", $data);
@@ -47,8 +46,6 @@ class IpController implements ContainerInjectableInterface
         return $page->render([
             "title" => $title,
         ]);
-
-
     }
 
     public function indexActionPost()
@@ -62,31 +59,30 @@ class IpController implements ContainerInjectableInterface
         $ipv6 = $request->getPost("ipv6", null);
         $ipv4 = $request->getPost("ipv4", null);
 
-        $check = new IPChecker();
-
 
         if ($doVerify and $ipv6) {
 
 
-            $result = $check->checkIpv6($address);
+            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+                $result = "$address is a valid IPv6 address.";
+            } else {
+                $result = "$address is not a valid IPv6 address.";
+            }
 
             $session->set("res", $result);
             $session->set("ip", $address);
-
         }
 
-
         if ($doVerify and $ipv4) {
-            $res = $check->checkIpv4($address);
+            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                $res = "$address is a valid IPv4 address.";
+            } else {
+                $res = "$address is not a valid IPv4 address.";
+            }
 
             $session->set("res", $res);
             $session->set("ip", $address);
         }
-
-
         return $response->redirect("deel");
-
     }
-
-
 }
