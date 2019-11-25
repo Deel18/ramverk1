@@ -3,10 +3,10 @@
  * Guess my number, a class supporting the game through GET, POST and SESSION.
  */
 
-namespace Anax\Controller;
+namespace Deel\Controller;
 
 
-class Deel
+class IPChecker
 {
 
     public function checkIpv6($ip)

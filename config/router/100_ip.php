@@ -5,9 +5,9 @@
 return [
     "routes" => [
         [
-            "info" => "Deel Controller",
+            "info" => "Ip Controller",
             "mount" => "deel",
-            "handler" => "\Anax\Controller\DeelController",
+            "handler" => "\Deel\Controller\IpController",
         ],
-    ]
+    ],
 ];

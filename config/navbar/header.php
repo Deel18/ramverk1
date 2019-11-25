@@ -50,7 +50,7 @@ return [
         ],
         [
             "text" => "IP-verification",
-            "url" => "deel/ip",
+            "url" => "deel",
             "title" => "IP verfication",
         ],
     ],

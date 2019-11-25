@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Controller;
+namespace Deel\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
@@ -18,47 +18,12 @@ use Anax\Commons\ContainerInjectableTrait;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class DeelController implements ContainerInjectableInterface
+class IpController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
 
-
-    /**
-     * @var string $db a sample member variable that gets initialised
-     */
-    private $db = "not active";
-
-
-
-    /**
-     * The initialize method is optional and will always be called before the
-     * target method/action. This is a convienient method where you could
-     * setup internal properties that are commonly used by several methods.
-     *
-     * @return void
-     */
-    public function initialize() : void
-    {
-        // Use to initialise member variables.
-        $this->db = "active";
-    }
-
-
-    public function jsonActionGet() : array
-    {
-        $services = implode(", ", $this->di->getServices());
-        $json = [
-            "message" => __METHOD__ . "<p>\$di
-            contains: $services",
-            "di" => $this->di->getServices(),
-        ];
-
-        return [$json];
-    }
-
-
-    public function ipActionGet() : object
+    public function indexAction() : object
     {
 
         $title = "IP";
@@ -86,7 +51,7 @@ class DeelController implements ContainerInjectableInterface
 
     }
 
-    public function ipActionPost()
+    public function indexActionPost()
     {
         $request = $this->di->request;
         $response = $this->di->response;
@@ -97,7 +62,7 @@ class DeelController implements ContainerInjectableInterface
         $ipv6 = $request->getPost("ipv6", null);
         $ipv4 = $request->getPost("ipv4", null);
 
-        $check = new Deel();
+        $check = new IPChecker();
 
 
         if ($doVerify and $ipv6) {
@@ -119,7 +84,7 @@ class DeelController implements ContainerInjectableInterface
         }
 
 
-        return $response->redirect("deel/ip");
+        return $response->redirect("deel");
 
     }
 
