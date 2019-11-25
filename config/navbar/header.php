@@ -52,11 +52,20 @@ return [
             "text" => "IP-verification",
             "url" => "deel",
             "title" => "IP verfication",
-        ],
-        [
-            "text" => "Json",
-            "url" => "json",
-            "title" => "Json",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "IP-verification",
+                        "url" => "deel",
+                        "title" => "IP verfication",
+                    ],
+                    [
+                        "text" => "Json",
+                        "url" => "json",
+                        "title" => "Json",
+                    ],
+                ],
+            ],
         ],
     ],
 ];
