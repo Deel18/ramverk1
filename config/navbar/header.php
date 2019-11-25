@@ -53,5 +53,10 @@ return [
             "url" => "deel",
             "title" => "IP verfication",
         ],
+        [
+            "text" => "Json",
+            "url" => "json",
+            "title" => "Json",
+        ],
     ],
 ];
