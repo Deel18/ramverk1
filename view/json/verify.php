@@ -22,7 +22,7 @@ namespace Anax\View;
 
     <p>
         <label>IP:<br>
-        <input type="text" name="ip" value="19.117.63.126"/>
+        <input type="text" name="ip"/>
         </label>
     </p>
 
