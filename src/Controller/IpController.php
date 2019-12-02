@@ -61,10 +61,9 @@ class IpController implements ContainerInjectableInterface
 
 
         if ($doVerify and $ipv6) {
-
-
             if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-                $result = "$address is a valid IPv6 address.";
+                $hostname = gethostbyaddr($address);
+                $result = "$address is a valid IPv6 address. The domain name is: $hostname";
             } else {
                 $result = "$address is not a valid IPv6 address.";
             }
@@ -75,7 +74,8 @@ class IpController implements ContainerInjectableInterface
 
         if ($doVerify and $ipv4) {
             if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                $res = "$address is a valid IPv4 address.";
+                $hostname = gethostbyaddr($address);
+                $res = "$address is a valid IPv4 address. The domain name is: $hostname";
             } else {
                 $res = "$address is not a valid IPv4 address.";
             }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Deel\Controller;
+namespace Anax\Controller;
 
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
