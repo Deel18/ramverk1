@@ -32,6 +32,6 @@ namespace Anax\View;
 </form>
 
 <p>Example:
-    <a href="json/verify?ip=255.255.253.0">Test</a>
-    <a href="json/verify?ip=2001:db8:0:1234:0:567:8:1">Test 2</a>
+    <a href="json/verify?ip=8.8.8.8">Test</a>
+    <a href="json/verify?ip=2001:4860:4860::8888">Test 2</a>
 </p>
