@@ -36,8 +36,11 @@ class GeojsonController implements ContainerInjectableInterface
         $title = "IP";
 
         $page = $this->di->get("page");
+        $address = $_SERVER["REMOTE_ADDR"] ?? "";
 
-        $page->add("json/verify");
+        $page->add("geojson/verify", [
+            "address" => $address,
+        ]);
 
         return $page->render([
             "title" => $title,
@@ -52,7 +55,7 @@ class GeojsonController implements ContainerInjectableInterface
      *
      * @return array
      */
-    public function verifyActionGet()
+    public function geotagjsonActionGet()
     {
         $ipv = $this->di->request->getGet("ip");
 
@@ -62,10 +65,17 @@ class GeojsonController implements ContainerInjectableInterface
 
         $result = $valid ? "IP is valid." : "IP is not valid.";
 
+        $check = new IPChecker();
+
+        $res = $check->geoTag($ipv);
+
+
+
         $data = [
             "ip" => $ipv,
             "result" => $result,
             "host" => $host,
+            "geotag" => $res,
         ];
 
         return [$data];
