@@ -7,7 +7,7 @@ return [
         [
             "info" => "Ip Controller",
             "mount" => "deel",
-            "handler" => "\Anax\Controller\IpController",
+            "handler" => "\Anax\Ip\IpController",
         ],
     ],
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Controller;
+namespace Anax\Ip;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
@@ -18,20 +18,30 @@ use Anax\Commons\ContainerInjectableTrait;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class IpController implements ContainerInjectableInterface
+class GeotagController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
 
     public function indexAction() : object
     {
+
         $title = "IP";
+
+        $address = $_SERVER["REMOTE_ADDR"] ?? "No IP detected.";
+
+
 
         $page = $this->di->get("page");
         $session = $this->di->session;
 
         $res = $session->get("res", null);
         $ipv = $session->get("ip", null);
+        $country_name = $session->get("country_name", null);
+        $city = $session->get("city", null);
+        $longitude = $session->get("longitude", null);
+        $latitude = $session->get("latitude", null);
+        $type = $session->get("type", null);
 
         $session->set("res", null);
         $session->set("ip", null);
@@ -39,9 +49,15 @@ class IpController implements ContainerInjectableInterface
         $data = [
             "res" => $res,
             "ip" => $ipv,
+            "address" => $address,
+            "country_name" => $country_name,
+            "city" => $city,
+            "longitude" => $longitude,
+            "latitude" => $latitude,
+            "type" => $type,
         ];
 
-        $page->add("ip/verify", $data);
+        $page->add("geotag/verify", $data);
 
         return $page->render([
             "title" => $title,
@@ -56,33 +72,23 @@ class IpController implements ContainerInjectableInterface
 
         $doVerify = $request->getPost("verify", null);
         $address = $request->getPost("ip", null);
-        $ipv6 = $request->getPost("ipv6", null);
-        $ipv4 = $request->getPost("ipv4", null);
+        $check = new IPChecker();
 
 
-        if ($doVerify and $ipv6) {
-            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-                $hostname = gethostbyaddr($address);
-                $result = "$address is a valid IPv6 address. The domain name is: $hostname";
-            } else {
-                $result = "$address is not a valid IPv6 address.";
-            }
+        if ($doVerify) {
+            $result = $check->checkIpv($address);
+
+            $geotag = $check->geoTag($address);
+
 
             $session->set("res", $result);
             $session->set("ip", $address);
+            $session->set("country_name", $geotag->country_name);
+            $session->set("city", $geotag->city);
+            $session->set("longitude", $geotag->longitude);
+            $session->set("latitude", $geotag->latitude);
+            $session->set("type", $geotag->type);
         }
-
-        if ($doVerify and $ipv4) {
-            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                $hostname = gethostbyaddr($address);
-                $res = "$address is a valid IPv4 address. The domain name is: $hostname";
-            } else {
-                $res = "$address is not a valid IPv4 address.";
-            }
-
-            $session->set("res", $res);
-            $session->set("ip", $address);
-        }
-        return $response->redirect("deel");
+        return $response->redirect("geotag");
     }
 }

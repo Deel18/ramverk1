@@ -7,7 +7,7 @@ return [
         [
             "info" => "Json Controller",
             "mount" => "json",
-            "handler" => "\Anax\Controller\JipController",
+            "handler" => "\Anax\Ip\JipController",
         ],
     ],
 ];

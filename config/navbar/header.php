@@ -67,5 +67,24 @@ return [
                 ],
             ],
         ],
+        [
+            "text" => "Geotag",
+            "url" => "geotag",
+            "title" => "Geotag",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Geotag",
+                        "url" => "geotag",
+                        "title" => "Geotag",
+                    ],
+                    [
+                        "text" => "Geo-json",
+                        "url" => "geojson",
+                        "title" => "Geo-json",
+                    ],
+                ],
+            ],
+        ],
     ],
 ];
