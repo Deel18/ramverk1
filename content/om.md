@@ -23,5 +23,3 @@ Denna kursen ges på BTH och handlar om Ramverk. Mycket spännande!
 
 
 [FIGURE src="image/php1.jpg?w=200"]
-
-[Github-repot](https://github.com/Deel18)

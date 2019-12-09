@@ -56,29 +56,18 @@ class IpController implements ContainerInjectableInterface
 
         $doVerify = $request->getPost("verify", null);
         $address = $request->getPost("ip", null);
-        $ipv6 = $request->getPost("ipv6", null);
-        $ipv4 = $request->getPost("ipv4", null);
+        $check = new IPChecker();
 
-
-        if ($doVerify and $ipv6) {
-            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-                $hostname = gethostbyaddr($address);
-                $result = "$address is a valid IPv6 address. The domain name is: $hostname";
-            } else {
-                $result = "$address is not a valid IPv6 address.";
-            }
+        if ($doVerify) {
+             $result = $check->checkIpv($address);
 
             $session->set("res", $result);
             $session->set("ip", $address);
         }
 
-        if ($doVerify and $ipv4) {
-            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                $hostname = gethostbyaddr($address);
-                $res = "$address is a valid IPv4 address. The domain name is: $hostname";
-            } else {
-                $res = "$address is not a valid IPv4 address.";
-            }
+        if ($doVerify) {
+            $res = $check->checkIpv($address);
+
 
             $session->set("res", $res);
             $session->set("ip", $address);

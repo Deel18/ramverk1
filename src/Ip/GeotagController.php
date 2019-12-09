@@ -37,7 +37,7 @@ class GeotagController implements ContainerInjectableInterface
 
         $res = $session->get("res", null);
         $ipv = $session->get("ip", null);
-        $country_name = $session->get("country_name", null);
+        $countryName = $session->get("country_name", null);
         $city = $session->get("city", null);
         $longitude = $session->get("longitude", null);
         $latitude = $session->get("latitude", null);
@@ -45,12 +45,19 @@ class GeotagController implements ContainerInjectableInterface
 
         $session->set("res", null);
         $session->set("ip", null);
+        $session->set("country_name", null);
+        $session->set("city", null);
+        $session->set("longitude", null);
+        $session->set("latitude", null);
+        $session->set("type", null);
+
+
 
         $data = [
             "res" => $res,
             "ip" => $ipv,
             "address" => $address,
-            "country_name" => $country_name,
+            "country_name" => $countryName,
             "city" => $city,
             "longitude" => $longitude,
             "latitude" => $latitude,

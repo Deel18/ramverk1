@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test the SampleController.
  */
-class JipControllerTest extends TestCase
+class GeojsonControllerTest extends TestCase
 {
     /**
      * Test the route "index".
@@ -25,7 +25,7 @@ class JipControllerTest extends TestCase
         $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         //setup the controller
-        $controller = new JipController();
+        $controller = new GeojsonController();
         $controller->setDi($di);
 
         $res = $controller->indexAction();
@@ -39,7 +39,7 @@ class JipControllerTest extends TestCase
     /**
      * Test the route "info".
      */
-    public function testVerifyActionGet()
+    public function testgeotagjsonActionGet()
     {
         global $di;
 
@@ -51,20 +51,15 @@ class JipControllerTest extends TestCase
         $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         //setup the controller
-        $controller = new JipController();
+        $controller = new GeojsonController();
         $controller->setDi($di);
 
         $request = $di->get("request");
 
-        $request->setGet("ip", "19.117.63.126");
-        $res = $controller->verifyActionGet();
+        $request->setGet("ip", "194.47.129.126");
+        $res = $controller->geotagjsonActionGet();
         $this->assertIsArray($res);
 
-        $this->assertArrayHasKey("result", $res[0]);
-
-        $request->setGet("ip", "2001:db8:0:1234:0:567:8:1");
-        $res = $controller->verifyActionGet();
-        $this->assertIsArray($res);
         $this->assertArrayHasKey("result", $res[0]);
     }
 }

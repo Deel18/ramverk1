@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test the SampleController.
  */
-class IpControllerTest extends TestCase
+class GeotagControllerTest extends TestCase
 {
     /**
      * Test the route "index".
@@ -25,11 +25,16 @@ class IpControllerTest extends TestCase
         $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         //setup the controller
-        $controller = new IpController();
+        $controller = new GeotagController();
         $controller->setDi($di);
 
         $di->get("session")->set("ip", null);
         $di->get("session")->set("res", null);
+        $di->get("session")->set("country_name", null);
+        $di->get("session")->set("city", null);
+        $di->get("session")->set("longitude", null);
+        $di->get("session")->set("latitude", null);
+        $di->get("session")->set("type", null);
 
         $res = $controller->indexAction();
         $this->assertIsObject($res);
@@ -53,7 +58,7 @@ class IpControllerTest extends TestCase
         $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         //setup the controller
-        $controller = new IpController();
+        $controller = new GeotagController();
         $controller->setDi($di);
 
 
@@ -62,12 +67,10 @@ class IpControllerTest extends TestCase
         $session = $di->get("session");
 
         //Ipv4 test
-        $request->setPost("ip", "19.117.63.126");
-        $request->setPost("ipv4", "ipv4");
+        $request->setPost("ip", "194.47.129.126");
         $request->setPost("verify", "Verify");
 
         $session->set("res", null);
-        $session->set("ip", null);
 
         $res = $controller->indexActionPost();
         $this->assertIsObject($res);
@@ -75,23 +78,8 @@ class IpControllerTest extends TestCase
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
 
-        //Ipv6 test
-        $request->setPost("ip", "2001:db8:0:1234:0:567:8:1");
-        $request->setPost("ipv6", "ipv6");
-        $request->setPost("verify", "Verify");
-
-        $session->set("res", null);
-        $session->set("ip", null);
-
-        $res = $controller->indexActionPost();
-        $this->assertIsObject($res);
-        $response->redirectSelf();
-        $this->assertInstanceOf("Anax\Response\Response", $res);
-        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-
-        //Ipv6 fail test
-        $request->setPost("ip", "2001:db8:");
-        $request->setPost("ipv6", "ipv6");
+        //Fail test
+        $request->setPost("ip", "test");
         $request->setPost("verify", "Verify");
 
         $session->set("res", null);

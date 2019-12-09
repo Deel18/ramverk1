@@ -18,8 +18,6 @@ namespace Anax\View;
 <form method="post">
     <input type="text" name="ip">
     <input type="submit" name="verify" value="Verify">
-    <input type="radio" name="ipv6" value="IPv6"> IPv6
-    <input type="radio" name="ipv4" value="IPv4"> IPv4
 </form>
 
 
