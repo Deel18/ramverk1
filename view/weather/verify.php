@@ -16,7 +16,13 @@ namespace Anax\View;
 <p>Enter an IP/Geolocation to check the weather.</p>
 
 <form method="post">
-    <input type="text" name="ip" value="<?=$address?>">
+    <input type="text" name="ip">
+    <br>
+    <br>
+    Latitude
+    <br>
+    <input type="text" name="latitude">
+    </label>
     <br>
     <br>
     <label>
@@ -27,18 +33,16 @@ namespace Anax\View;
     <br>
     <br>
     <label>
-    Latitude
-    <br>
-    <input type="text" name="latitude">
-    </label>
-    <br>
-    <br>
     <input type="submit" name="verify" value="Verify">
 </form>
 
 
 <?php if ($res) : ?>
     <p><b><?= $res ?></b></p>
+<?php endif; ?>
+
+<?php if ($geo) : ?>
+    <p><b><?= $geo ?></b></p>
 <?php endif; ?>
 
 

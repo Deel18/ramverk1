@@ -37,12 +37,13 @@ class WeatherController implements ContainerInjectableInterface
 
         $res = $session->get("res", null);
         $ipv = $session->get("ip", null);
-
+        $geo = $session->get("geo", null);
         $weatherWeek = $session->get("weatherWeek", null);
 
         $session->set("res", null);
         $session->set("ip", null);
         $session->set("weatherWeek", null);
+        $session->set("geo", null);
 
 
 
@@ -51,6 +52,7 @@ class WeatherController implements ContainerInjectableInterface
             "ip" => $ipv,
             "address" => $address,
             "weatherWeek" => $weatherWeek,
+            "geo" => $geo,
         ];
 
         $page->add("weather/verify", $data);
@@ -68,15 +70,18 @@ class WeatherController implements ContainerInjectableInterface
 
         $doVerify = $request->getPost("verify", null);
         $address = $request->getPost("ip", null);
+        $latitude = $request->getPost("latitude", null);
+        $longitude = $request->getPost("longitude", null);
 
         $check = $this->di->get("validator");
+
+        $weather = new \Anax\Curl\Curl();
 
         if ($doVerify && $address) {
             $result = $check->checkIpv($address);
 
             $geotag = $check->geoTag($address);
 
-            $weather = new \Anax\Curl\Curl();
 
 
             $fetchWeather = $weather->weather($geotag->latitude, $geotag->longitude);
@@ -89,6 +94,25 @@ class WeatherController implements ContainerInjectableInterface
 
         }
 
+        if ($doVerify && $latitude) {
+            $verifyCoord = $check->verifyGeo($latitude, $longitude);
+
+            if ($verifyCoord) {
+                $fetchWeather = $weather->weather($latitude, $longitude);
+
+                $data = $fetchWeather->daily;
+
+                $valid = "The coordinates $latitude, $longitude are valid.";
+
+                $session->set("geo", $valid);
+                $session->set("weatherWeek", $data);
+
+            } else {
+                $session->set("geo", "The coordinates are invalid. Try again.");
+            }
+
+
+        }
 
 
 
