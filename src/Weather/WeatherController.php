@@ -37,19 +37,12 @@ class WeatherController implements ContainerInjectableInterface
 
         $res = $session->get("res", null);
         $ipv = $session->get("ip", null);
-        $countryName = $session->get("country_name", null);
-        $city = $session->get("city", null);
-        $longitude = $session->get("longitude", null);
-        $latitude = $session->get("latitude", null);
-        $type = $session->get("type", null);
+
+        $weatherWeek = $session->get("weatherWeek", null);
 
         $session->set("res", null);
         $session->set("ip", null);
-        $session->set("country_name", null);
-        $session->set("city", null);
-        $session->set("longitude", null);
-        $session->set("latitude", null);
-        $session->set("type", null);
+        $session->set("weatherWeek", null);
 
 
 
@@ -57,11 +50,7 @@ class WeatherController implements ContainerInjectableInterface
             "res" => $res,
             "ip" => $ipv,
             "address" => $address,
-            "country_name" => $countryName,
-            "city" => $city,
-            "longitude" => $longitude,
-            "latitude" => $latitude,
-            "type" => $type,
+            "weatherWeek" => $weatherWeek,
         ];
 
         $page->add("weather/verify", $data);
@@ -79,23 +68,31 @@ class WeatherController implements ContainerInjectableInterface
 
         $doVerify = $request->getPost("verify", null);
         $address = $request->getPost("ip", null);
-        $check = new IPChecker();
 
+        $check = $this->di->get("validator");
 
-        if ($doVerify) {
+        if ($doVerify && $address) {
             $result = $check->checkIpv($address);
 
             $geotag = $check->geoTag($address);
 
+            $weather = new \Anax\Curl\Curl();
+
+
+            $fetchWeather = $weather->weather($geotag->latitude, $geotag->longitude);
+
+            $data = $fetchWeather->daily;
 
             $session->set("res", $result);
             $session->set("ip", $address);
-            $session->set("country_name", $geotag->country_name);
-            $session->set("city", $geotag->city);
-            $session->set("longitude", $geotag->longitude);
-            $session->set("latitude", $geotag->latitude);
-            $session->set("type", $geotag->type);
+            $session->set("weatherWeek", $data);
+
         }
+
+
+
+
+
         return $response->redirect("weather");
     }
 }
