@@ -16,9 +16,11 @@ class IPChecker
     public function checkIpv($ipv)
     {
         if (filter_var($ipv, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            return "$ipv is a valid IPv6 address";
+            $hostname = gethostbyaddr($ipv);
+            return "$ipv is a valid IPv6 address and the host is: $hostname";
         } elseif (filter_var($ipv, FILTER_VALIDATE_IP)) {
-            return "$ipv is a valid IPv4 address";
+            $hostname = gethostbyaddr($ipv);
+            return "$ipv is a valid IPv4 address and the host is: $hostname";
         } else {
             return "$ipv is not a valid IP address";
         }
