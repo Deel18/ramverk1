@@ -41,10 +41,30 @@ namespace Anax\View;
     <p><b><?= $res ?></b></p>
 <?php endif; ?>
 
-<?php if ($country_name) : ?>
-    <p><b>Type:</b> <?= $type?></p>
-    <p><b>Country:</b> <?= $country_name ?></p>
-    <p><b>City:</b> <?= $city ?></p>
-    <p><b>Longitude:</b> <?= $longitude ?></p>
-    <p><b>Latitude:</b> <?= $latitude ?></p>
+
+<p><b><?= var_dump($weatherWeek) ?></b></p>
+
+
+<?php if ($weatherWeek) : ?>
+
+<h1> Weather report for upcoming 7 days.</h1>
+<table>
+    <tr>
+        <th>Summary</th>
+        <th>Time</th>
+        <th>Temperature min</th>
+        <th>Temperature Max</th>
+        <th>Humidity</th>
+    </tr>
+
+    <tr>
+    <?php foreach ($weatherWeek->data as $key => $row) : ?>
+        <td><?= $row->summary ?></td>
+        <td><?= gmdate("Y-m-d\ TH:i:s", $row->time) ?></td>
+        <td><?= $row->temperatureMin ?></td>
+        <td><?= $row->temperatureMax ?></td>
+        <td><?= $row->humidity ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
 <?php endif; ?>
