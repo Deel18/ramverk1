@@ -41,4 +41,18 @@ class IPChecker
 
         return $decode;
     }
+
+    public function verifyGeo($latitude, $longitude)
+    {
+        $validLat = preg_match('/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $latitude);
+        $validLon = preg_match('/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $longitude);
+
+        if (!$validLat && !$validLon) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
 }
