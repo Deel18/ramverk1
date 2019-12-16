@@ -28,7 +28,7 @@ class IPChecker
 
     public function geoTag($ipv)
     {
-        $apiKey = file_get_contents(ANAX_INSTALL_PATH . "/config/apikey.txt");
+        $apiKey = file_get_contents(ANAX_INSTALL_PATH . "/config/apikey.txt", FALSE, NULL, 0, 33);
         $apiKey = trim($apiKey);
         $curl = curl_init();
 
