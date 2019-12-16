@@ -86,5 +86,24 @@ return [
                 ],
             ],
         ],
+        [
+            "text" => "Weather",
+            "url" => "weather",
+            "title" => "Weather",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Weather",
+                        "url" => "weather",
+                        "title" => "Weather",
+                    ],
+                    [
+                        "text" => "Weather-json",
+                        "url" => "weatherjson",
+                        "title" => "Weather-json",
+                    ],
+                ],
+            ],
+        ],
     ],
 ];
