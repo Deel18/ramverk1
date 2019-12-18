@@ -35,6 +35,33 @@ namespace Anax\View;
     <label>
     <input type="submit" name="verify" value="Verify">
 </form>
+<br>
+<br>
+
+<?php if ($latitude) : ?>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+    <h2> OpenStreetMap </h2>
+    <div id="mapid" style="height: 400px; width: 70%;"></div>
+    <script>
+
+    var mymap = L.map('mapid').setView([<?= $latitude ?>, <?= $longitude ?>], 13);
+    var marker = L.marker([<?= $latitude ?>, <?= $longitude ?>]).addTo(mymap);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        accessToken: '<?= $osmToken ?>'
+    }).addTo(mymap)
+
+    </script>
+
+<?php endif; ?>
+
 
 
 <?php if ($res) : ?>

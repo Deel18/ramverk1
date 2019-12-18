@@ -39,11 +39,15 @@ class WeatherController implements ContainerInjectableInterface
         $ipv = $session->get("ip", null);
         $geo = $session->get("geo", null);
         $weatherWeek = $session->get("weatherWeek", null);
+        $latitude = $session->get("latitude", null);
+        $longitude = $session->get("longitude", null);
 
         $session->set("res", null);
         $session->set("ip", null);
         $session->set("weatherWeek", null);
         $session->set("geo", null);
+        $session->set("latitude", null);
+        $session->set("longitude", null);
 
 
 
@@ -53,6 +57,8 @@ class WeatherController implements ContainerInjectableInterface
             "address" => $address,
             "weatherWeek" => $weatherWeek,
             "geo" => $geo,
+            "latitude" => $latitude,
+            "longitude" => $longitude,
         ];
 
         $page->add("weather/verify", $data);
@@ -91,6 +97,8 @@ class WeatherController implements ContainerInjectableInterface
             $session->set("res", $result);
             $session->set("ip", $address);
             $session->set("weatherWeek", $data);
+            $session->set("latitude", $geotag->latitude);
+            $session->set("longitude", $geotag->longitude);
 
         }
 
@@ -106,6 +114,8 @@ class WeatherController implements ContainerInjectableInterface
 
                 $session->set("geo", $valid);
                 $session->set("weatherWeek", $data);
+                $session->set("latitude", $latitude);
+                $session->set("longitude", $longitude);
 
             } else {
                 $session->set("geo", "The coordinates are invalid. Try again.");
@@ -113,9 +123,6 @@ class WeatherController implements ContainerInjectableInterface
 
 
         }
-
-
-
 
         return $response->redirect("weather");
     }
