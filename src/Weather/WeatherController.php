@@ -38,6 +38,7 @@ class WeatherController implements ContainerInjectableInterface
         $res = $session->get("res", null);
         $ipv = $session->get("ip", null);
         $geo = $session->get("geo", null);
+        $apikey = $session->get("apikey", null);
         $weatherWeek = $session->get("weatherWeek", null);
         $latitude = $session->get("latitude", null);
         $longitude = $session->get("longitude", null);
@@ -48,6 +49,7 @@ class WeatherController implements ContainerInjectableInterface
         $session->set("geo", null);
         $session->set("latitude", null);
         $session->set("longitude", null);
+        $session->set("apikey", null);
 
 
 
@@ -59,6 +61,7 @@ class WeatherController implements ContainerInjectableInterface
             "geo" => $geo,
             "latitude" => $latitude,
             "longitude" => $longitude,
+            "apikey" => $apikey,
         ];
 
         $page->add("weather/verify", $data);
@@ -83,6 +86,7 @@ class WeatherController implements ContainerInjectableInterface
 
         $weather = new \Anax\Curl\Curl();
 
+
         if ($doVerify && $address) {
             $result = $check->checkIpv($address);
 
@@ -99,6 +103,7 @@ class WeatherController implements ContainerInjectableInterface
             $session->set("weatherWeek", $data);
             $session->set("latitude", $geotag->latitude);
             $session->set("longitude", $geotag->longitude);
+            $session->set("apikey", $weather->getApiKey());
 
         }
 
@@ -116,6 +121,7 @@ class WeatherController implements ContainerInjectableInterface
                 $session->set("weatherWeek", $data);
                 $session->set("latitude", $latitude);
                 $session->set("longitude", $longitude);
+                $session->set("apikey", $weather->getApiKey());
 
             } else {
                 $session->set("geo", "The coordinates are invalid. Try again.");

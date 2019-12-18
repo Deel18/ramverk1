@@ -28,4 +28,11 @@ class Curl
 
         return $decode;
     }
+
+    public function getApiKey()
+    {
+        $apiKey = file_get_contents(ANAX_INSTALL_PATH . "/config/apikey.txt", FALSE, NULL, 66);
+        $apiKey = trim($apiKey);
+        return $apiKey;
+    }
 }
