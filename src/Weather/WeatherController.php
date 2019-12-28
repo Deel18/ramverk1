@@ -40,12 +40,14 @@ class WeatherController implements ContainerInjectableInterface
         $geo = $session->get("geo", null);
         $apikey = $session->get("apikey", null);
         $weatherWeek = $session->get("weatherWeek", null);
+        $weatherPast = $session->get("weatherPast", null);
         $latitude = $session->get("latitude", null);
         $longitude = $session->get("longitude", null);
 
         $session->set("res", null);
         $session->set("ip", null);
         $session->set("weatherWeek", null);
+        $session->set("weatherPast", null);
         $session->set("geo", null);
         $session->set("latitude", null);
         $session->set("longitude", null);
@@ -58,6 +60,7 @@ class WeatherController implements ContainerInjectableInterface
             "ip" => $ipv,
             "address" => $address,
             "weatherWeek" => $weatherWeek,
+            "weatherPast" => $weatherPast,
             "geo" => $geo,
             "latitude" => $latitude,
             "longitude" => $longitude,
@@ -93,14 +96,17 @@ class WeatherController implements ContainerInjectableInterface
             $geotag = $check->geoTag($address);
 
 
-
             $fetchWeather = $weather->weather($geotag->latitude, $geotag->longitude);
+            $fetchPastWeather = $weather->pastWeather($geotag->latitude, $geotag->longitude);
 
             $data = $fetchWeather->daily;
+
+            $pastData = $fetchPastWeather;
 
             $session->set("res", $result);
             $session->set("ip", $address);
             $session->set("weatherWeek", $data);
+            $session->set("weatherPast", $pastData);
             $session->set("latitude", $geotag->latitude);
             $session->set("longitude", $geotag->longitude);
             $session->set("apikey", $weather->getApiKey());
@@ -112,13 +118,16 @@ class WeatherController implements ContainerInjectableInterface
 
             if ($verifyCoord) {
                 $fetchWeather = $weather->weather($latitude, $longitude);
+                $fetchPastWeather = $weather->pastWeather($latitude, $longitude);
 
                 $data = $fetchWeather->daily;
+                $pastData = $fetchPastWeather;
 
                 $valid = "The coordinates $latitude, $longitude are valid.";
 
                 $session->set("geo", $valid);
                 $session->set("weatherWeek", $data);
+                $session->set("weatherPast", $pastData);
                 $session->set("latitude", $latitude);
                 $session->set("longitude", $longitude);
                 $session->set("apikey", $weather->getApiKey());

@@ -73,6 +73,7 @@ namespace Anax\View;
 <?php endif; ?>
 
 
+<p><b><?= var_dump($weatherPast) ?></b></p>
 <p><b><?= var_dump($weatherWeek) ?></b></p>
 
 
@@ -98,4 +99,28 @@ namespace Anax\View;
     </tr>
     <?php endforeach; ?>
 </table>
+
+
+<h1> Weather report for past 30 days.</h1>
+<table>
+    <tr>
+        <th>Summary</th>
+        <th>Time</th>
+        <th>Temperature</th>
+        <th>Apparent Temperature</th>
+        <th>Humidity</th>
+    </tr>
+
+    <tr>
+    <?php foreach ($weatherPast as $row) : ?>
+        <td><?= $row["currently"]["summary"] ?></td>
+        <td><?= gmdate("Y-m-d\ TH:i:s", $row["currently"]["time"]) ?></td>
+        <td><?= $row["currently"]["temperature"] ?></td>
+        <td><?= $row["currently"]["apparentTemperature"] ?></td>
+        <td><?= $row["currently"]["humidity"] ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+
+
 <?php endif; ?>
