@@ -15,6 +15,9 @@ namespace Anax\View;
 
 <p>Enter an IP/Geolocation to check the weather.</p>
 
+<p>You can enter an IP/Geotag below or send a GET request to [baseurl]/weatjson/weatherjson?ip=x.x.x.xlatitude=x.xxxxx&longitude=xx.xxxxx&verify=Verify </p>
+
+
 <form action="weatjson/weatherjson">
     <input type="text" name="ip">
     <br>

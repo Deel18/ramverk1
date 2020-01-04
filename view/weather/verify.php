@@ -39,7 +39,6 @@ namespace Anax\View;
 <br>
 
 <?php if ($latitude) : ?>
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
 
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
@@ -72,13 +71,7 @@ namespace Anax\View;
     <p><b><?= $geo ?></b></p>
 <?php endif; ?>
 
-
-<p><b><?= var_dump($weatherPast) ?></b></p>
-<p><b><?= var_dump($weatherWeek) ?></b></p>
-
-
 <?php if ($weatherWeek) : ?>
-
 <h1> Weather report for upcoming 7 days.</h1>
 <table>
     <tr>

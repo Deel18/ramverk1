@@ -4,6 +4,7 @@ namespace Anax\Weather;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Anax\Curl\Curl as Curl;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -34,8 +35,12 @@ class WeatherJsonController implements ContainerInjectableInterface
 
         $page = $this->di->get("page");
 
+        $data = [
+            "address" => $address
+        ];
 
-        $page->add("weatherjson/verify");
+
+        $page->add("weatherjson/verify", $data);
 
         return $page->render([
             "title" => $title,
@@ -45,8 +50,6 @@ class WeatherJsonController implements ContainerInjectableInterface
     public function weatherjsonActionGet()
     {
         $request = $this->di->request;
-        $response = $this->di->response;
-        $session = $this->di->session;
 
         $doVerify = $request->getGet("verify", null);
         $address = $request->getGet("ip", null);
@@ -55,7 +58,7 @@ class WeatherJsonController implements ContainerInjectableInterface
 
         $check = $this->di->get("validator");
 
-        $weather = new \Anax\Curl\Curl();
+        $weather = new Curl();
 
 
         if ($doVerify && $address) {
@@ -79,7 +82,6 @@ class WeatherJsonController implements ContainerInjectableInterface
             ];
 
             return [$data];
-
         }
 
         if ($doVerify && $latitude) {
@@ -101,15 +103,11 @@ class WeatherJsonController implements ContainerInjectableInterface
                 ];
 
                 return [$data];
-
             } else {
                 $invalid = "The coordinates are invalid. Try again.";
 
                 return [$invalid];
             }
-
-
         }
-
     }
 }

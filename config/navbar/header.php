@@ -98,9 +98,9 @@ return [
                         "title" => "Weather",
                     ],
                     [
-                        "text" => "Weather-json",
-                        "url" => "weatherjson",
-                        "title" => "Weather-json",
+                        "text" => "Weatherjson",
+                        "url" => "weatjson",
+                        "title" => "Weatherjson",
                     ],
                 ],
             ],

@@ -4,6 +4,7 @@ namespace Anax\Weather;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Anax\Curl\Curl as Curl;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -87,7 +88,7 @@ class WeatherController implements ContainerInjectableInterface
 
         $check = $this->di->get("validator");
 
-        $weather = new \Anax\Curl\Curl();
+        $weather = new Curl();
 
 
         if ($doVerify && $address) {
@@ -110,7 +111,6 @@ class WeatherController implements ContainerInjectableInterface
             $session->set("latitude", $geotag->latitude);
             $session->set("longitude", $geotag->longitude);
             $session->set("apikey", $weather->getApiKey());
-
         }
 
         if ($doVerify && $latitude) {
@@ -131,14 +131,10 @@ class WeatherController implements ContainerInjectableInterface
                 $session->set("latitude", $latitude);
                 $session->set("longitude", $longitude);
                 $session->set("apikey", $weather->getApiKey());
-
             } else {
                 $session->set("geo", "The coordinates are invalid. Try again.");
             }
-
-
         }
-
         return $response->redirect("weather");
     }
 }
