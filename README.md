@@ -15,7 +15,7 @@ MVC
 
 ### Week 3 
 
-DI
+DI - Dependency injection
 
 ### Week 4 
 
@@ -23,7 +23,7 @@ Module
 
 ### Week5
 
-CI
+CI - Continuous integration
 
 ### Week 6
 
