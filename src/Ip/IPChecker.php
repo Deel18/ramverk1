@@ -28,8 +28,8 @@ class IPChecker
 
     public function geoTag($ipv)
     {
-        $apiKey = file_get_contents(ANAX_INSTALL_PATH . "/config/apikey.txt", false, null, 0, 33);
-        $apiKey = trim($apiKey);
+        $apiKey = require ANAX_INSTALL_PATH . "/config/apikey.php";
+        $apiKey = $apiKey["geotag"];
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_URL, "http:/api.ipstack.com/$ipv?access_key=$apiKey");

@@ -15,8 +15,8 @@ class Curl
 
     public function weather($latitude, $longitude)
     {
-        $apiKey = file_get_contents(ANAX_INSTALL_PATH . "/config/apikey.txt", false, null, 33, 33);
-        $apiKey = trim($apiKey);
+        $apiKey = require ANAX_INSTALL_PATH . "/config/apikey.php";
+        $apiKey = $apiKey["darksky"];
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_URL, "https://api.darksky.net/forecast/$apiKey/$latitude,$longitude?exclude=minutely,hourly,alerts,flags");
@@ -31,8 +31,8 @@ class Curl
 
     public function pastWeather($latitude, $longitude)
     {
-        $apiKey = file_get_contents(ANAX_INSTALL_PATH . "/config/apikey.txt", false, null, 33, 33);
-        $apiKey = trim($apiKey);
+        $apiKey = require ANAX_INSTALL_PATH . "/config/apikey.php";
+        $apiKey = $apiKey["darksky"];
 
         $url = "https://api.darksky.net/forecast/$apiKey/$latitude,$longitude";
 
@@ -83,8 +83,9 @@ class Curl
 
     public function getApiKey()
     {
-        $apiKey = file_get_contents(ANAX_INSTALL_PATH . "/config/apikey.txt", false, null, 66);
-        $apiKey = trim($apiKey);
+        //For rendering openstreetmaps
+        $apiKey = require ANAX_INSTALL_PATH . "/config/apikey.php";
+        $apiKey = $apiKey["openstreetmap"];
         return $apiKey;
     }
 }
